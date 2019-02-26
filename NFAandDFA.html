@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en-US">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>NFA and DFA </title>
+</head>
+
+<body>
+
+    <h2 id=title></h2>
+
+    <h3>Non-deterministic finite automaton</h3>
+
+    w = <input id=input type=text value=01001010 onChange="test()"> &emsp;
+    F = <input id=final type=text value=c onChange="test()" style="width:30px">
+
+    <pre id=out></pre>
+
+    <hr />
+    <b>Logic</b>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 0 50px;
+        }
+
+        th {
+            color: blue;
+            padding: 5px 12px;
+        }
+
+        td {
+            border: 1px solid blue;
+            padding: 5px 12px;
+            text-align: center;
+        }
+    </style>
+    <table>
+        <tr>
+            <th></th>
+            <th>0</th>
+            <th>1</th>
+        </tr>
+        <tr>
+            <th>> a</th>
+            <td>a</td>
+            <td>ab</td>
+        </tr>
+        <tr>
+            <th>&emsp;b</th>
+            <td>c</td>
+            <td>ϕ</td>
+        </tr>
+        <tr>
+            <th>* c</th>
+            <td>ϕ</td>
+            <td>ϕ</td>
+        </tr>
+    </table>
+
+    <pre id=sample></pre>
+
+    <hr />
+
+    <script>
+        "use strict";
+        function union(a, b) { //set operation using strings
+            let s = a
+            for (let x of b) if (!a.includes(x)) s += x
+            return s
+        }
+        function intersect(a, b) {
+            let s = ''
+            for (let x of b) if (a.includes(x)) s += x
+            return s
+        }
+        function delta(q, c) { // (1|0)*10
+            if (q == 'a' && c == '0') return 'ab'
+            if (q == 'a' && c == '1') return 'a'
+            if (q == 'b' && c == '0') return 'c'
+            return '';  //default -- no transition
+        }
+        function accept(w, F = 'c', Q = 'a') {
+            //w: input String
+            //F: final state(s)
+            //Q: current state(s)
+            let i = 0, txt = Q
+            while (i < w.length) {
+                let c = w[i], T = ''
+                for (let q of Q)
+                    T = union(T, delta(q, c))
+                Q = T
+                if (Q == '') break
+                i++; txt += ", " + c + " -> " + Q + '\n' + Q
+            }
+            input.selectionStart = i
+            input.selectionEnd = i + 1
+            return intersect(Q, F).length > 0
+        }
+        function test() {
+            let s = accept(input.value, final.value);
+            console.log(s); out.innerHTML = s
+        }
+
+        
+        test();
+    </script>
+
+
+
+<h3>Deterministic finite automaton</h3>
+
+    w = <input id=input2 type=text value=010010100 onChange="test2()"> &emsp;
+    F = <input id=final2 type=text value=F onChange="test2()" style="width:30px">
+
+    <pre id=out2></pre>
+
+    <hr />
+    <b>Logic</b>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 0 50px;
+        }
+
+        th {
+            color: blue;
+            padding: 5px 12px;
+        }
+
+        td {
+            border: 1px solid blue;
+            padding: 5px 12px;
+            text-align: center;
+        }
+    </style>
+    <table>
+        <tr>
+            <th></th>
+            <th>0</th>
+            <th>1</th>
+        </tr>
+        <tr>
+            <th>> D</th>
+            <td>E</td>
+            <td>D</td>
+        </tr>
+        <tr>
+            <th>&emsp;E</th>
+            <td>F</td>
+            <td>D</td>
+        </tr>
+        <tr>
+            <th>* F</th>
+            <td>F</td>
+            <td>D</td>
+        </tr>
+    </table>
+
+    <pre id=sample></pre>
+
+    <hr />
+    <!--p>Ref: <a href="https:xxx"
+   target="ExternalDocument">xxx</a>
+</p-->
+
+    <script>
+        "use strict";
+        function delta2(q, c) { // (1|0)*10
+            if (q == 'D' && c == '0') return 'E'
+            if (q == 'E' && c == '0') return 'F'
+            if (q == 'F' && c == '0') return 'F'
+            if (c == '1') return 'D'
+            return '';  //default -- no transition
+        }
+        function accept2(w, F = 'F', q = 'D') {
+            //w: input String
+            //F: final state(s)
+            //q: current state
+            let i = 0, txt = q
+            while (i < w.length) {
+                q = delta2(q, w[i])
+                if (q == '') break
+                i++; txt += " -> " + q
+            }
+            input2.selectionStart = i
+            input2.selectionEnd = i + 1
+            return (q != '' && F.includes(q))
+        }
+        function test2() {
+            let w = input2.value, s = "  "
+            for (let c of w) s += c + "    "
+            s += '\n' + accept2(w, final2.value)
+            console.log(s); out2.innerHTML = s
+        }
+
+        title.innerText = document.title
+        sample.innerText = delta2 + '\n' + accept2
+        test()
+    </script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+</body>
+
+</html>
