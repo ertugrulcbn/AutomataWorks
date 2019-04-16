@@ -1,0 +1,183 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" media="all"
+           href="https://maeyler.github.io/JS/sss/inspector.css">
+    <script src="https://maeyler.github.io/JS/sss/inspector.js"></script>
+    <script src="Lexical.js"></script>
+    <script src="Expression.js"></script>
+    <script src="microJ1.js"></script>
+    <script src="microJ3.js"></script>
+    <title>microJ3 Parser </title>
+  <style>
+    body  { background: #fca; }
+    #outx {
+      resize: both;
+      background: #eee;
+    }
+    #inpx, #outx {
+      box-sizing: border-box;
+      border: 1px solid gray;
+      width: 400px;
+      height: 14em;
+      overflow-y: auto;
+      font: 12px monospace;
+    }
+    #file  { width: 150px; }
+  </style>
+</head>
+
+<body>
+<h2 id=title>microJ3 Parser &emsp;
+<button onClick='doParse()'>Parse</button>
+<input type=file id=file onChange='fileSelect(this)' />
+</h2>
+<p>
+<textarea id=inpx rows=14>
+Faktoriyel(k)  {
+  var fact;
+  fact = 1;
+  while(k>1){
+    fact = fact * k;
+    k = k - 1;
+  }
+  return fact;
+}
+main()  { //main
+  var girdi;
+  read girdi;
+  println Faktoriyel(girdi);
+}
+
+</textarea>
+</p>
+<pre id=outx>
+</pre>
+
+<hr />
+
+<script>
+"use strict";
+function doParse() {
+    let str = inpx.value
+    if (!str) return
+    tokens = Token.list(str)
+    let y = [...tokens]  //clone
+    display(y); //console.log(y);
+    try {
+        tokens.reverse()
+        tok = tokens.pop()
+        let p = program();
+        match(EOF);  //success();
+        console.log(p); display(p);
+        outx.innerText = p.toTree()
+        title.scrollIntoView()
+        return p
+    } catch(x) {
+        showError(inpx)
+        outx.innerText = x
+        reportError(x)
+    }
+}
+
+const reader = new FileReader();
+function fileSelect(t) { //target is the button
+    let f = t.files[0];
+    if (f.name.toLowerCase().endsWith(".mj")) {
+        reader.onload = function(evt) { //text
+            inpx.value = evt.target.result;
+            console.log(f.name, f.size); doParse()
+        }
+        reader.readAsText(f);
+    }
+}
+
+//the simplest interpreter
+var current  //Statement
+var SF //current StackFrame
+
+class StackFrame {
+      //Method met;       running method
+      //float[] values;   current values
+      constructor(m, v) {
+         this.met = m; this.values = v;
+      }
+      toString() {
+         let s = this.values.join(' ');
+         return this.met+"["+ s +" ]";
+      }
+}
+
+class VM { //virtual machine for interpretation
+   static start(p) {
+      VM.stopped = false;
+      VM.returnValue = NaN;
+      try {
+         SF = null; printer = '';
+         VM.invokeMethod(p.main, []);
+         if (printer) console.log(printer)
+         if (SF != null) throw ("illegal Frame "+SF);
+         return "OK"
+      } catch(x) {
+         VM.error(x);
+      }
+   }
+   static error(msg) {
+      console.log(msg);
+      console.log("at "+SF.met+": "+current);
+   }
+   static invokeMethod(m, v) {
+      let old = SF;
+      SF = new StackFrame(m, v);
+      try {
+         VM.runBlock(m);
+         VM.returnValue = 0;
+      } catch(x) {
+         if (typeof x == "number")
+            VM.returnValue = x;
+            //console.log("return ", x);
+         else throw x;
+      }
+      SF = old;
+   }
+   static runBlock(b) {
+      let old = current;
+      for (let s of b.list) {
+         if (VM.stopped)
+            throw "Program stopped";
+         current = s; s.run();
+      }
+      current = old;
+   }
+   static assertEQ(x, y) {
+      if (x != y) throw ("Unexpected "+y);
+   }
+   static getValue(v) {
+      VM.assertEQ(v.met, SF.met);
+      return SF.values[v.ind];
+   }
+   static setValue(v, val) {
+      VM.assertEQ(v.met, SF.met);
+      SF.values[v.ind] = val;
+   }
+}
+
+function init() {
+    MENU = new Menu() //extends Menu
+    MENU.global = window
+    display(MENU)
+}
+
+    try {
+        inspect(document.body, init)
+        //inp.value = "_.run()"
+    } catch(x) {
+        reportError(x)
+    }
+    inpx.focus(); doParse()
+</script>
+
+</body>
+</html>
