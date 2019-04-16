@@ -9,3 +9,5 @@ AutomataWorks
 4-)[CW4](https://ertugrulcbn.github.io/AutomataWorks/cw4.html)
 
 5-)[CW5](https://ertugrulcbn.github.io/AutomataWorks/CW5/Expression.html)
+
+6-)[CW7](https://ertugrulcbn.github.io/AutomataWorks/microJ/microJ3.html)
