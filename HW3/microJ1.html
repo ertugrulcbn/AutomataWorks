@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" media="all"
+           href="https://maeyler.github.io/JS/sss/inspector.css">
+    <script src="https://maeyler.github.io/JS/sss/inspector.js"></script>
+    <script src="Lexical.js"></script>
+    <script src="Expression.js"></script>
+    <script src="microJ1.js"></script>
+    <title>microJ1 Parser </title>
+  <style>
+    body  { background: #9fa; }
+    #inpx { width: 380px; }
+    #outx { font: 12px monospace; }
+  </style>
+</head>
+
+<body>
+<h2 id=title>microJ1 Parser &emsp;
+<button onClick='doParse()'>Parse</button>
+</h2>
+<p>
+<textarea id=inpx rows=7>
+test(c) {
+    var a, sum=5;
+    println "Expressions";
+    a = 40/(20-2*5); sum = 11;
+    print "sum: ", a, sum:5;
+}      
+</textarea>
+</p>
+<pre id=outx>
+</pre>
+
+<hr />
+
+<script>
+"use strict";
+function doParse() {
+    let str = inpx.value
+    if (!str) return
+    tokens = Token.list(str)
+    let y = [...tokens]  //clone
+    display(y);
+    try {
+        tokens.reverse()
+        tok = tokens.pop()
+        metST.clear();
+        let e = method()
+        match(EOF);
+        outx.innerText = e.toTree()
+        console.log(e); display(e)
+        return e
+    } catch(x) {
+        showError(inpx)
+        outx.innerText = x
+        reportError(x)
+    }
+}
+
+function init() {
+    MENU = new Menu() //extends Menu
+    MENU.global = window
+    display(MENU)
+}
+
+    try {
+        inspect(document.body, init)
+        //inp.value = "a"; display(a)
+    } catch(x) {
+        reportError(x)
+    }
+    inpx.focus()
+</script>
+
+</body>
+</html>
