@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" media="all"
+           href="https://maeyler.github.io/JS/sss/inspector.css">
+    <script src="https://maeyler.github.io/JS/sss/inspector.js"></script>
+    <script src="Lexical.js"></script>
+    <script src="Expression.js"></script>
+    <title>Expression Parser </title>
+  <style>
+    body  { background: #4ff; }
+    #inpx { width: 210px; }
+    #tree { width: 290px; }
+    #pfix { width: 270px; }
+    #outx { font: 16px monospace; }
+  </style>
+</head>
+
+<body>
+<h2 id=title></h2>
+
+<p>
+Expression <input type=text id=inpx onKeyUp='doKey(event)'
+value='((1+3)*2)^3'>
+<span id=outx></span>
+</p>
+<p>
+Tree
+<textarea id=tree rows=6>
+</textarea>
+</p>
+<p>
+Postfix <input type=text id=pfix>
+</p>
+
+<hr />
+
+<script>
+"use strict";
+function doParse() {
+    let str = inpx.value
+    if (!str) return
+    tokens = Token.list(str)
+    //outx.innerHTML = tokens.join(' ')
+    let y = [...tokens]  //clone
+    console.log(y); display(y)
+    try {
+        tokens.reverse()
+        tok = tokens.pop()
+        let e = expression()
+        match(EOF);
+        outx.innerText = ' = '+e.fValue()
+        tree.value = e.toTree()
+        pfix.value = e.toPostfix()
+        console.log(e); display(e)
+        return e
+    } catch(x) {
+        showError(inpx)
+        outx.innerText = ''
+        tree.value = ''
+        pfix.value = x
+        reportError(x)
+    }
+}
+function doKey(evt) {
+    if (evt.key == "Enter") doParse()
+}
+function init() {
+    MENU = new Menu() //extends Menu
+    MENU.global = window
+    display(MENU)
+}
+    title.innerText = document.title
+    try {
+        inspect(document.body, init)
+        //inp.value = "a"; display(a)
+    } catch(x) {
+        reportError(x)
+    }
+    inpx.focus()
+</script>
+
+</body>
+</html>
