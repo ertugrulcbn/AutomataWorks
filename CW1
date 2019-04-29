@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>CW 1</title>
+
+<script>
+"use strict";
+function delta(q, c) { 
+    if (q=='A' && c=='0') return 'B'
+    if (q=='A' && c=='1') return 'A'
+    if (q=='B' && c=='0') return 'C'
+    if (q=='B' && c=='1') return 'A'
+    if (q=='C' && c=='0' || c=='1') return 'C'
+    return '';  //default -- no transition
+}
+function accept(w, F='A'||'B', q='A') {
+    //w: input String
+    //F: final state(s)
+    //q: current state
+    let i = 0, txt = q
+    while (i < w.length) {
+        q = delta(q, w[i])
+        if (q == '') break
+        i++; txt += " -> "+q
+    }
+    input.selectionStart = i
+    input.selectionEnd = i+1
+    let a = (q!='' && F.includes(q))
+    return txt+'  '+(a? "Accept" : "Reject")
+}
+function test() {
+    let w = input.value, s = "  "
+    for (let c of w) s += c+"    "
+    s += '\n'+accept(w, final.value)
+    console.log(s); out.innerHTML = s
+}
+</script>
+</head>
+
+<body>
+
+<h2 id=title></h2>
+
+<p>
+<b>1.soru:</b><br> alphabet= string<br><br>empty string= " "<br><br>length= a.length<br><br>concatenation=<br>var a = "Fatih";<br>var b= "Sultan";<br> var c = a.concat(b);<br><br><b>2.soru:</b><br>01101 kabul eder<br>00101 kabul etmez, ardarda -iki sıfır- '00' geldikten sonra C'ye girer ve bu makine C'ye girdikten sonra çıkamaz.</p>
+
+w = <input id=input type=text value=01101
+  onChange="test()"> &emsp;
+F = <input id=final type=text value=A,B
+  onChange="test()" style="width:30px">
+
+<pre id=out></pre>
+
+<hr />
+<b>Logic</b>
+
+<style>
+    table { 
+        border-collapse: collapse; 
+        margin: 0 50px; 
+    }
+    th { 
+        color: blue; 
+        padding: 5px 12px; 
+    }
+    td { 
+        border: 1px solid blue; 
+        padding: 5px 12px; 
+        text-align: center; 
+    }
+</style>
+<table>
+<tr><th></th><th>0</th><th>1</th></tr>
+<tr><th>> *A</th><td>B</td><td>A</td></tr>
+<tr><th>&emsp;*B</th><td>C</td><td>A</td></tr>
+<tr><th>&emsp;C</th><td>C</td><td>C</td></tr>
+</table>
+
+<pre id=sample></pre>
+
+<hr />
+<!--p>Ref: <a href="https:xxx" 
+   target="ExternalDocument">xxx</a>
+</p-->
+
+<script>
+    title.innerText = document.title
+    sample.innerText = delta
+    test()
+</script>
+
+</body>
