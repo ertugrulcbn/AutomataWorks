@@ -26,7 +26,7 @@
 				</div>
 				<div class="col-lg-8 col-md-7 col-xs-12">
 					<div class="slogan">
-						Regular Expression to Nfa Conversion
+						Regular Expression to Nfa Conversion - Ertuğrul Çoban
 					</div>
 				</div>
 				<div class="col-lg-2 col-md-3 col-xs-12 right">
@@ -44,115 +44,109 @@
 							<h4>Navigation</h4>	
 							<nav>
 								<ul>
-									<li><a href="#start" class="current">Get started</a></li>
-									<li><a href="#features">Features</a></li>
-									<li><a href="#code">Get code</a></li>
-									<li><a href="#images">Images</a></li>
-									<li><a href="#credit">Credits</a></li>
+									<li><a href="#start" class="current">Non-deterministic Finite Automaton</a></li>
+									<li><a href="#features">Regular Expressions</a></li>
+									<li><a href="#code">Construction of an FA from an RE</a></li>
+									<li><a href="#images">Sample Problem</a></li>
+									<li><a href="#credit"></a></li>
 								</ul>					
 							</nav>
 						</div>
 					</aside>
 					<div class="content-info">
 						<div class="section-txt" id="start">
-							<h3>Get started</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis interdum sapien, vitae convallis ante. Nunc id mi scelerisque, laoreet nisl pretium, suscipit nisi. Proin porta tortor tellus, sed condimentum ligula aliquet sit amet. Mauris nulla ipsum, tempor eu vulputate ut, placerat ac tortor. Integer ut tincidunt magna. Suspendisse risus nulla, tempus a interdum et, imperdiet iaculis lectus. Maecenas ultrices diam eu massa maximus viverra.</p>
-							<p>Integer quis dignissim purus. Nam convallis mattis mi at venenatis. Donec vitae leo leo. Praesent auctor, nisi non fringilla dapibus, felis sem pretium enim, sed volutpat lectus turpis vitae orci. Vivamus vel interdum risus. Phasellus ullamcorper placerat nulla ut dictum. Proin tristique congue elit, in ullamcorper dolor dictum ut. Aenean commodo et odio semper mollis.</p>
+							<h3>Non-deterministic Finite Automaton</h3>
+							<p>In NDFA, for a particular input symbol, the machine can move to any combination of the states in the machine. In other words, the exact state to which the machine moves cannot be determined. Hence, it is called Non-deterministic Automaton. As it has finite number of states, the machine is called Non-deterministic Finite Machine or Non-deterministic Finite Automaton.</p>
+							<h4>Formal Definition of an NDFA</h4>
+							<p>An NDFA can be represented by a 5-tuple (Q, ∑, δ, q0, F) where −</p>
 							<ul>
-								<li>Aliquam pretium euismod libero</li>
-								<li>Cum sociis natoque penatibus</li>
-								<li>Lorem ipsum dolor sit amet</li>
-								<li>Cras mauris tortor, consectetur</li>
-								<li>Proin viverra, augue ut mattis</li>
-								<li>Praesent rutrum accumsan</li>
+								<li>Q is a finite set of states.</li>
+								<li>∑ is a finite set of symbols called the alphabets.</li>
+								<li>δ is the transition function where δ: Q × ∑ → 2Q
+
+									(Here the power set of Q (2Q) has been taken because in case of NDFA, from a state, transition can occur to any combination of Q states)</li>
+								<li>q0 is the initial state from where any input is processed (q0 ∈ Q).</li>
+								<li>F is a set of final state/states of Q (F ⊆ Q).</li>
 							</ul>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis interdum sapien, vitae convallis ante. Nunc id mi scelerisque, laoreet nisl pretium, suscipit nisi. Proin porta tortor tellus, sed condimentum ligula aliquet sit amet. Mauris nulla ipsum, tempor eu vulputate ut, placerat ac tortor. Integer ut tincidunt magna. Suspendisse risus nulla, tempus a interdum et, imperdiet iaculis lectus. Maecenas ultrices diam eu massa maximus viverra.</p>
+							<h4>Graphical Representation of an NDFA: (same as DFA)</h4>
+						<p>An NDFA is represented by digraphs called state diagram.</p>	
+							<ul>
+								<li>The vertices represent the states.</li>
+								<li>The arcs labeled with an input alphabet show the transitions.</li>
+								<li>The initial state is denoted by an empty single incoming arc.</li>
+								<li>The final state is indicated by double circles.</li>
+								
+							</ul>
+							<p>Its graphical representation would be as follows −</p>
+							<img src="images/ndfa1.jpg">
 						</div>
 						<div class="section-txt" id="features">
-							<h3>Features</h3>
+							<h3>Regular Expressions</h3>
+							<p>A Regular Expression can be recursively defined as follows −</p>
 							<ul>
-								<li>Aliquam pretium euismod libero</li>
-								<li>Cum sociis natoque penatibus</li>
-								<li>Lorem ipsum dolor sit amet</li>
-								<li>Cras mauris tortor, consectetur</li>
-								<li>Proin viverra, augue ut mattis</li>
-								<li>Praesent rutrum accumsan</li>
+								<li>ε is a Regular Expression indicates the language containing an empty string. (L (ε) = {ε})</li>
+								<li>φ is a Regular Expression denoting an empty language. (L (φ) = { })</li>
+								<li>x is a Regular Expression where L = {x}</li>
+								<li>If X is a Regular Expression denoting the language L(X) and Y is a Regular Expression denoting the language L(Y), then
+								</br>
+								- X + Y is a Regular Expression corresponding to the language L(X) ∪ L(Y) where L(X+Y) = L(X) ∪ L(Y).
+							 </br>
+							  - X . Y is a Regular Expression corresponding to the language L(X) . L(Y) where L(X.Y) = L(X) . L(Y)
+							</br>
+							  - R* is a Regular Expression corresponding to the language L(R*)where L(R*) = (L(R))*
+								</li>
+								<li>If we apply any of the rules several times from 1 to 5, they are Regular Expressions.</li>
+								
 							</ul>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis interdum sapien, vitae convallis ante. Nunc id mi scelerisque, laoreet nisl pretium, suscipit nisi. Proin porta tortor tellus, sed condimentum ligula aliquet sit amet. Mauris nulla ipsum, tempor eu vulputate ut, placerat ac tortor. Integer ut tincidunt magna. Suspendisse risus nulla, tempus a interdum et, imperdiet iaculis lectus. Maecenas ultrices diam eu massa maximus viverra.</p>
-						<pre class="prettyprint">
-&lt;pre class=&quot;prettyprint&quot;&gt;class Voila {
-public:
-  // Voila
-  static const string VOILA = &quot;Voila&quot;;
+							<h4>Some Re Examples</h4>
+							<img src="images/Screenshot_1.jpg">
 
-  // will not interfere with embedded &lt;a href=&quot;#voila2&quot;&gt;tags&lt;/a&gt;.
-}&lt;/pre&gt;</pre>
-							<p>Integer quis dignissim purus. Nam convallis mattis mi at venenatis. Donec vitae leo leo. Praesent auctor, nisi non fringilla dapibus, felis sem pretium enim, sed volutpat lectus turpis vitae orci. Vivamus vel interdum risus. Phasellus ullamcorper placerat nulla ut dictum. Proin tristique congue elit, in ullamcorper dolor dictum ut. Aenean commodo et odio semper mollis.</p>
 						</div>
 						<div class="section-txt" id="code">
-							<h3>Get code</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis interdum sapien, vitae convallis ante. Nunc id mi scelerisque, laoreet nisl pretium, suscipit nisi. Proin porta tortor tellus, sed condimentum ligula aliquet sit amet. Mauris nulla ipsum, tempor eu vulputate ut, placerat ac tortor. Integer ut tincidunt magna. Suspendisse risus nulla, tempus a interdum et, imperdiet iaculis lectus. Maecenas ultrices diam eu massa maximus viverra.</p>
-							<pre class="prettyprint">
-&lt;p&gt;Table Example:&lt;/p&gt;
-	&lt;style type=&quot;text/css&quot;&gt;
-		table.example5 {
-			background-color:GreenYellow;border:1px dotted black;width:100%;
-		}
-		table.example5 th, table.example5 td {
-			text-align:center;border:0;padding:5px;background-color:transparent;
-		}
-		table.example5 th {
-			background-color:LimeGreen;color:white;
-		}
-		table.example5 th:first-child {
-			width:20%;
-		}
-	&lt;/style&gt;
-	&lt;table class=&quot;example5&quot;&gt;
-		&lt;tr&gt;
-			&lt;th rowspan=&quot;2&quot;&gt;Table header&lt;/th&gt;&lt;td&gt;Table cell 1
-		&lt;/tr&gt;
-		&lt;tr&gt;
-			&lt;td&gt;Table cell 2&lt;/td&gt;
-		&lt;/tr&gt;
-	&lt;/table&gt;
-</pre>
+							<h3>Construction of an FA from an RE</h3>
+							<p>We can use Thompson's Construction to find out a Finite Automaton from a Regular Expression. We will reduce the regular expression into smallest regular expressions and converting these to NFA and finally to DFA.
+							</br></br>
+								Some basic RA expressions are the following −</p>
+						<h4>Case 1 − For a regular expression ‘a’, we can construct the following FA −</h4>
+						<img src="images/finite_automata_for_re.jpg">
+						<h4>Case 2 − For a regular expression ‘ab’, we can construct the following FA −</h4>
+						<img src="images/finite_automata_for_re1.jpg">
+						<h4>Case 3 − For a regular expression (a+b), we can construct the following FA −</h4>
+						<img src="images/finite_automata_for_re2.jpg">
+						<h4>Case 4 − For a regular expression (a+b)*, we can construct the following FA −</h4>
+						<img src="images/finite_automata_for_re3.jpg">
+
+						<h4>Method</h4>
+						<p>Step 1 Construct an NFA with Null moves from the given regular expression.</p>
+            <p>Step 2 Remove Null transition from the NFA and convert it into its equivalent DFA.</p>
+
+
+
+
+
+
+
+
 						</div>
 						<div class="section-txt" id="images">
-							<h3>Images</h3>
-							<ul>
-								<li>Aliquam pretium euismod libero</li>
-								<li>Cum sociis natoque penatibus</li>
-								<li>Lorem ipsum dolor sit amet</li>
-								<li>Cras mauris tortor, consectetur</li>
-								<li>Proin viverra, augue ut mattis</li>
-								<li>Praesent rutrum accumsan</li>
-							</ul>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis interdum sapien, vitae convallis ante. Nunc id mi scelerisque, laoreet nisl pretium, suscipit nisi. Proin porta tortor tellus, sed condimentum ligula aliquet sit amet. Mauris nulla ipsum, tempor eu vulputate ut, placerat ac tortor. Integer ut tincidunt magna. Suspendisse risus nulla, tempus a interdum et, imperdiet iaculis lectus. Maecenas ultrices diam eu massa maximus viverra.</p>
-						<pre class="prettyprint">
-&lt;pre class=&quot;prettyprint&quot;&gt;class Voila {
-public:
-  // Voila
-  static const string VOILA = &quot;Voila&quot;;
+								<h3>Problem</h3>
 
-  // will not interfere with embedded &lt;a href=&quot;#voila2&quot;&gt;tags&lt;/a&gt;.
-}&lt;/pre&gt;</pre>
-							<p>Integer quis dignissim purus. Nam convallis mattis mi at venenatis. Donec vitae leo leo. Praesent auctor, nisi non fringilla dapibus, felis sem pretium enim, sed volutpat lectus turpis vitae orci. Vivamus vel interdum risus. Phasellus ullamcorper placerat nulla ut dictum. Proin tristique congue elit, in ullamcorper dolor dictum ut. Aenean commodo et odio semper mollis.</p>
+								<p> Convert the following RA into its equivalent  1 (0 + 1)* 0 </p>
+
+								<h4>Solution</h4>
+
+								<p> We will concatenate three expressions "1", "(0 + 1)*" and "0"</p>
+
+								<img src="images/ndfa_with_null_transition_for_ra.jpg">
+								<p>Now we will remove the ε transitions. After we remove the ε transitions from the NDFA, we get the following −</p>
+	              <img src="images/ndfa_with_null_transition_for_ra1.jpg">
+                <p>It is an NDFA corresponding to the RE − 1 (0 + 1)* 0. If you want to convert it into a DFA,  apply the method of converting NDFA to DFA simply .</p>
+
+
+
 						</div>
 						<div class="section-txt" id="credit">
-							<h3>Credits</h3>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis interdum sapien, vitae convallis ante. Nunc id mi scelerisque, laoreet nisl pretium, suscipit nisi. Proin porta tortor tellus, sed condimentum ligula aliquet sit amet. Mauris nulla ipsum, tempor eu vulputate ut, placerat ac tortor. Integer ut tincidunt magna. Suspendisse risus nulla, tempus a interdum et, imperdiet iaculis lectus. Maecenas ultrices diam eu massa maximus viverra.</p>
-							<img src="images/image1.jpg">
-							<p>Integer quis dignissim purus. Nam convallis mattis mi at venenatis. Donec vitae leo leo. Praesent auctor, nisi non fringilla dapibus, felis sem pretium enim, sed volutpat lectus turpis vitae orci. Vivamus vel interdum risus. Phasellus ullamcorper placerat nulla ut dictum. Proin tristique congue elit, in ullamcorper dolor dictum ut. Aenean commodo et odio semper mollis.</p>
-							<ul>
-								<li>Aliquam pretium euismod libero</li>
-								<li>Cum sociis natoque penatibus</li>
-								<li>Lorem ipsum dolor sit amet</li>
-								<li>Cras mauris tortor, consectetur</li>
-								<li>Proin viverra, augue ut mattis</li>
-								<li>Praesent rutrum accumsan</li>
-							</ul>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse quis interdum sapien, vitae convallis ante. Nunc id mi scelerisque, laoreet nisl pretium, suscipit nisi. Proin porta tortor tellus, sed condimentum ligula aliquet sit amet. Mauris nulla ipsum, tempor eu vulputate ut, placerat ac tortor. Integer ut tincidunt magna. Suspendisse risus nulla, tempus a interdum et, imperdiet iaculis lectus. Maecenas ultrices diam eu massa maximus viverra.</p>
+							-
 						</div>
 					</div>
 				</div>
@@ -164,7 +158,21 @@ public:
 			<div class="row">
 				<div class="col-lg-12 center">
 					<!--	footer -->
-				</div>
+					This website presents by Ertuğrul Çoban. This product was created for Automata Theory lessons.
+You can use this as you like in noncommercial purposes.
+				</br>
+				Lesson : <a href="https://maeyler.github.io/Auto/work/">Formal Languages and Automata Theory-BLM 320
+				</a>
+			</br>
+			Instructor : <a href="https://github.com/maeyler">Mehmet Akif Eyler
+
+				</a>
+			</br>
+			About Me : <a href="https://github.com/ertugrulcbn">Ertuğrul Çoban
+
+				</a>
+</div>
+								</div>
 			</div>
 		</div>
 	</div>
@@ -173,6 +181,9 @@ public:
 			<div class="row">
 				<div class="col-lg-12 center">
 					<!--	footer -->
+					Developed by Ertuğrul Çoban © 2019. All rights reserved.
+					
+
 				</div>
 			</div>
 		</div>
